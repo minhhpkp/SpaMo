@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Union, Any
 
 import pytorch_lightning as pl
-from omegaconf import OmegaConf
+from omegaconf import OmegaConf, DictConfig
 from pytorch_lightning import seed_everything
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 from pytorch_lightning.trainer import Trainer
@@ -96,7 +96,7 @@ def get_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def load_configs(config_paths: List[str]) -> OmegaConf:
+def load_configs(config_paths: List[str]) -> DictConfig:
     """Load and merge multiple configuration files.
     
     Args:
@@ -106,7 +106,9 @@ def load_configs(config_paths: List[str]) -> OmegaConf:
         Merged configuration
     """
     configs = [OmegaConf.load(cfg) for cfg in config_paths]
-    return OmegaConf.merge(*configs)
+    conf = OmegaConf.merge(*configs)
+    assert isinstance(conf, DictConfig)
+    return conf
 
 
 def setup_logging_dirs(opt: argparse.Namespace) -> tuple:
@@ -153,7 +155,7 @@ def configure_callbacks(
     lightning_config: OmegaConf,
     logdir: str,
     now: str,
-    config: OmegaConf
+    config: DictConfig
 ) -> List:
     """Configure training callbacks.
     

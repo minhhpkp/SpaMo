@@ -70,3 +70,9 @@ tmp/
 datasets
 
 __pycache__
+
+/cache
+/Phoenix
+/features
+/lightning_logs
+spamo.ckpt

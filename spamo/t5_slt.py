@@ -34,7 +34,7 @@ class FlanT5SLT(AbstractSLT):
     def __init__(
         self, 
         tuning_type: str = 'lora', 
-        model_name: Optional[str] = None, 
+        model_name: str = "google/flan-t5-xl", 
         frame_sample_rate: int = 1, 
         prompt: str = '',
         input_size: int = 1024,

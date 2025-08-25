@@ -8,6 +8,7 @@ import numpy as np
 import torch.nn.functional as F
 from PIL import Image
 from transformers import AutoImageProcessor, CLIPVisionModel
+import time
 
 import sys
 sys.path.append('./')
@@ -125,7 +126,8 @@ def get_iterator(args, mode):
 
 
 def main():
-    mode = ["dev", "test", "train"]
+    # mode = ["dev", "test", "train"]
+    mode = ["test"]
     for m in mode:
         parser = get_parser()
         args = parser.parse_args()
@@ -145,6 +147,8 @@ def main():
             _m = m
 
         generator, num = get_iterator(args, _m)
+
+        start = time.perf_counter()
         iterator = generator()
 
         for vit_feat in tqdm.tqdm(iterator, total=num):
@@ -161,6 +165,9 @@ def main():
             
             np.save(osp.join(save_path, f'{id}{postfix}.npy'), feats)
 
+        end = time.perf_counter()
+        elapsed_ms = (end - start)
+        print(f"Execution time: {elapsed_ms:.4f} seconds")
 
 if __name__ == "__main__":
     main()

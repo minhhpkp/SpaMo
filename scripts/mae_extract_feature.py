@@ -6,6 +6,7 @@ import tqdm
 import os.path as osp
 from PIL import Image
 from transformers import VideoMAEModel, VideoMAEImageProcessor
+import time
 
 import sys
 sys.path.append('./')
@@ -129,7 +130,8 @@ def main():
     parser = get_parser()
     args = parser.parse_args()
 
-    mode = ["dev", "test", "train"]
+    # mode = ["dev", "test", "train"]
+    mode = ["test"]
     for m in mode:
         ds_name = osp.split(args.anno_root)[-1]
         fname = f'mae_feat_{ds_name}'
@@ -144,6 +146,8 @@ def main():
             _m = m
 
         generator, num = get_iterator(args, _m)
+
+        start = time.perf_counter()
         iterator = generator()
 
         for vit_feat in tqdm.tqdm(iterator, total=num):
@@ -155,6 +159,9 @@ def main():
                 postfix = f'_{st}{postfix}'
             
             np.save(osp.join(save_path, f'{id}{postfix}.npy'), feats)
+        end = time.perf_counter()
+        elapsed_ms = (end - start)
+        print(f"Execution time: {elapsed_ms:.4f} seconds")
 
 
 if __name__ == "__main__":

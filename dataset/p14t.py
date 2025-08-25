@@ -5,9 +5,10 @@ from typing import Dict, List, Optional, Union, Any, Tuple
 from pathlib import Path
 from spamo.constants import *
 import random
+from torch.utils.data import Dataset
 
 
-class Phoenix14T(torch.utils.data.Dataset):
+class Phoenix14T(Dataset):
     """
     Dataset class for the Phoenix14T sign language dataset.
     
