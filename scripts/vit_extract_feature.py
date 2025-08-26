@@ -42,7 +42,7 @@ class ViTFeatureReader(object):
             model_name, output_hidden_states=True, cache_dir=cache_dir
         ).to(device).eval()
         
-        self.image_processor = AutoImageProcessor.from_pretrained(model_name)
+        self.image_processor = AutoImageProcessor.from_pretrained(model_name, use_fast=True)
 
     @torch.no_grad()
     def forward_features(self, inputs):

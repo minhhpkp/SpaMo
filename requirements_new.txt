@@ -1,0 +1,24 @@
+accelerate
+datasets
+einops
+einops-exts
+expecttest
+hypothesis
+identify
+lightning
+lightning-cloud
+lightning-utilities
+pytorch_lightning
+numpy
+peft
+pillow
+portalocker
+sacrebleu
+sentry-sdk
+setproctitle
+# torch
+transformers
+wandb
+omegaconf
+rouge-score
+pyparsing
